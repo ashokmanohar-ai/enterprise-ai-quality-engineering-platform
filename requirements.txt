@@ -1,0 +1,2 @@
+# Fast, deterministic core used by local development and PR checks.
+-e .[dev]

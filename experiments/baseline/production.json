@@ -1,0 +1,9 @@
+{
+  "functional_pass_rate": 0.92,
+  "faithfulness": 0.84,
+  "answer_relevance": 0.82,
+  "context_precision": 0.79,
+  "context_recall": 0.80,
+  "agent_task_completion": 0.93,
+  "retrieval_rank_1": 0.86
+}

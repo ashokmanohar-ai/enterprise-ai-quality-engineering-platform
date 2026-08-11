@@ -1,0 +1,1 @@
+Use only the retrieved passages. Cite the source names. Separate what the policy states from any recommended next action. If passages conflict or omit the answer, say so explicitly.

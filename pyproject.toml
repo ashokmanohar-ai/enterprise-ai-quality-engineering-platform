@@ -1,0 +1,74 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "enterprise-ai-quality"
+version = "0.1.0"
+description = "Unified enterprise control plane for LLM, RAG, agent, MCP, security, embedding, performance, and observability quality engineering"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = { text = "MIT" }
+authors = [{ name = "Ashok Kumar Manohar" }]
+dependencies = [
+  "openai==2.53.0",
+  "pydantic==2.13.4",
+  "pydantic-settings==2.15.0",
+  "PyYAML==6.0.2",
+  "typer==0.27.1",
+  "rich==15.0.0",
+  "httpx==0.28.1",
+]
+
+[project.optional-dependencies]
+llm = ["deepeval==4.0.3"]
+rag = ["ragas==0.4.3"]
+security-pyrit = ["pyrit==1.0.1"]
+security-garak = ["garak==0.16.0"]
+embeddings = ["mteb==2.18.16", "sentence-transformers==5.1.0"]
+mcp = ["mcp[cli]==2.0.0"]
+performance = ["aiperf==0.12.0"]
+phoenix = [
+  "arize-phoenix==19.21.0",
+  "arize-phoenix-client==3.0.0",
+  "arize-phoenix-evals==3.4.0",
+]
+langfuse = ["langfuse==4.14.3"]
+dev = [
+  "pytest==8.4.1",
+  "pytest-asyncio==1.1.0",
+  "pytest-cov==6.2.1",
+  "ruff==0.12.8",
+  "mypy==1.17.1",
+  "pip-audit==2.9.0",
+]
+
+[project.scripts]
+aiq = "ai_quality.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ai_quality"]
+
+[tool.pytest.ini_options]
+addopts = "-q --strict-markers"
+testpaths = ["tests"]
+markers = [
+  "llm: requires an authorized live evaluator model",
+  "rag: requires an authorized live evaluator model",
+  "security: requires explicit red-team authorization",
+  "performance: requires explicit load-test authorization",
+  "integration: crosses a process or protocol boundary",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S", "SIM"]
+ignore = ["S101"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["ai_quality"]

@@ -1,0 +1,23 @@
+authorization_required: true
+synthetic_data_only: true
+default_profile: smoke
+profiles:
+  smoke:
+    promptfoo_plugins: [system-prompt-override, prompt-extraction, pii:direct]
+    garak_spec: "probes.promptinject,probes.encoding"
+    pyrit_scenarios: [prompt_injection, data_leakage]
+    max_requests: 30
+  nightly:
+    promptfoo_plugins: [system-prompt-override, prompt-extraction, pii:direct, excessive-agency, indirect-prompt-injection]
+    garak_spec: "tag:owasp:llm01,tag:owasp:llm02"
+    pyrit_scenarios: [prompt_injection, jailbreak, data_leakage, tool_abuse]
+    max_requests: 250
+internal_severity_mapping:
+  prompt_injection: high
+  indirect_prompt_injection: high
+  jailbreak: high
+  data_leakage: critical
+  sensitive_data_leakage: critical
+  tool_abuse: high
+  system_prompt_extraction: medium
+report_retention_days: 30

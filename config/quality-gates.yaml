@@ -1,0 +1,45 @@
+version: 1
+profiles:
+  dev:
+    required_suites: [deterministic, llm, rag]
+    quality:
+      functional_pass_rate: {min: 0.80, blocking: true}
+      faithfulness: {min: 0.75, blocking: true}
+      answer_relevance: {min: 0.70, blocking: false}
+    budgets: {max_cases: 10, max_concurrency: 2, max_usd: 2.00}
+  pr:
+    required_suites: [deterministic, llm, rag, prompt_regression, agent, mcp, security_smoke]
+    quality:
+      functional_pass_rate: {min: 0.90, blocking: true}
+      faithfulness: {min: 0.80, blocking: true}
+      answer_relevance: {min: 0.80, blocking: true}
+      context_precision: {min: 0.75, blocking: true}
+      context_recall: {min: 0.75, blocking: true}
+      agent_task_completion: {min: 0.90, blocking: true}
+      step_efficiency: {min: 0.85, blocking: false}
+    security:
+      max_critical: 0
+      max_high: 0
+    regression: {max_quality_drop: 0.03, critical_case_drop: 0.00}
+    budgets: {max_cases: 20, max_concurrency: 3, max_usd: 10.00}
+  nightly:
+    required_suites: [llm, rag, prompt_regression, agent, mcp, security, embeddings, performance]
+    quality:
+      functional_pass_rate: {min: 0.92, blocking: true}
+      faithfulness: {min: 0.82, blocking: true}
+      answer_relevance: {min: 0.82, blocking: true}
+      context_precision: {min: 0.78, blocking: true}
+      context_recall: {min: 0.78, blocking: true}
+      retrieval_rank_1: {min: 0.80, blocking: true}
+    security: {max_critical: 0, max_high: 0}
+    performance:
+      error_rate: {max: 0.01, blocking: true}
+      p95_latency_ms: {max: 5000, blocking: true}
+      p95_ttft_ms: {max: 1500, blocking: true}
+      requests_per_second: {min: 1.0, blocking: false}
+    regression: {max_quality_drop: 0.03, critical_case_drop: 0.00}
+    budgets: {max_cases: 100, max_concurrency: 5, max_usd: 50.00}
+  release:
+    extends: nightly
+    required_suites: [deterministic, llm, rag, prompt_regression, model_comparison, agent, mcp, security, embeddings, performance, baseline]
+    regression: {max_quality_drop: 0.02, critical_case_drop: 0.00}

@@ -1,0 +1,26 @@
+description: AcmeCloud unified prompt quality suite
+prompts:
+  - id: file://../prompts/customer-support/v1.txt
+    label: customer-support-v1
+  - id: file://../prompts/customer-support/v2.txt
+    label: customer-support-v2
+providers:
+  - id: azure:chat:{{ env.AZURE_OPENAI_CHAT_DEPLOYMENT }}
+    label: azure-application
+    config:
+      apiBaseUrl: '{{ env.AZURE_OPENAI_ENDPOINT }}'
+      apiKey: '{{ env.AZURE_OPENAI_API_KEY }}'
+      apiVersion: '{{ env.AZURE_OPENAI_API_VERSION }}'
+      temperature: 0
+tests: file://../datasets/generated/promptfoo-golden.json
+evaluateOptions:
+  maxConcurrency: 3
+  showProgressBar: false
+defaultTest:
+  options:
+    provider:
+      id: azure:chat:{{ env.AZURE_OPENAI_EVALUATOR_DEPLOYMENT }}
+      config:
+        apiBaseUrl: '{{ env.AZURE_OPENAI_ENDPOINT }}'
+        apiKey: '{{ env.AZURE_OPENAI_API_KEY }}'
+        apiVersion: '{{ env.AZURE_OPENAI_API_VERSION }}'

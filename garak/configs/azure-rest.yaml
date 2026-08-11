@@ -1,0 +1,17 @@
+plugins:
+  target_type: rest
+  generators:
+    rest:
+      RestGenerator:
+        key_env_var: AZURE_OPENAI_API_KEY
+        method: post
+        headers:
+          api-key: $KEY
+          Content-Type: application/json
+        req_template_json_object:
+          messages:
+            - role: user
+              content: $INPUT
+          temperature: 0
+        response_json: true
+        response_json_field: $.choices[0].message.content

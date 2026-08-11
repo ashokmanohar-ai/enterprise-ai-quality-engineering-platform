@@ -1,0 +1,21 @@
+description: Azure deployment A versus B using the same prompt and canonical cases
+prompts:
+  - id: file://../prompts/customer-support/v2.txt
+    label: customer-support-v2
+providers:
+  - id: azure:chat:{{ env.AZURE_OPENAI_MODEL_A_DEPLOYMENT }}
+    label: model-a
+    config:
+      apiBaseUrl: '{{ env.AZURE_OPENAI_ENDPOINT }}'
+      apiKey: '{{ env.AZURE_OPENAI_API_KEY }}'
+      apiVersion: '{{ env.AZURE_OPENAI_API_VERSION }}'
+      temperature: 0
+  - id: azure:chat:{{ env.AZURE_OPENAI_MODEL_B_DEPLOYMENT }}
+    label: model-b
+    config:
+      apiBaseUrl: '{{ env.AZURE_OPENAI_ENDPOINT }}'
+      apiKey: '{{ env.AZURE_OPENAI_API_KEY }}'
+      apiVersion: '{{ env.AZURE_OPENAI_API_VERSION }}'
+      temperature: 0
+tests: file://../datasets/generated/promptfoo-golden.json
+evaluateOptions: {maxConcurrency: 2, showProgressBar: false}

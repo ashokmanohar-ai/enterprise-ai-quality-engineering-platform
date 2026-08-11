@@ -1,0 +1,5 @@
+name: soak
+concurrency: 10
+benchmark_duration: 3600
+warmup_request_count: 10
+streaming: true

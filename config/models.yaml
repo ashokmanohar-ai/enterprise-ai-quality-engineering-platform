@@ -1,0 +1,24 @@
+application:
+  provider: azure_openai
+  deployment_env: AZURE_OPENAI_CHAT_DEPLOYMENT
+  temperature: 0
+  max_output_tokens: 800
+evaluator:
+  provider: azure_openai
+  deployment_env: AZURE_OPENAI_EVALUATOR_DEPLOYMENT
+  temperature: 0
+  max_output_tokens: 1200
+embeddings:
+  primary:
+    provider: azure_openai
+    deployment_env: AZURE_OPENAI_EMBEDDING_DEPLOYMENT
+  candidates:
+    - id: azure-primary
+      provider: azure_openai
+      deployment_env: AZURE_OPENAI_EMBEDDING_DEPLOYMENT
+    - id: local-baseline
+      provider: sentence_transformers
+      model: sentence-transformers/all-MiniLM-L6-v2
+comparison:
+  model_a_env: AZURE_OPENAI_MODEL_A_DEPLOYMENT
+  model_b_env: AZURE_OPENAI_MODEL_B_DEPLOYMENT

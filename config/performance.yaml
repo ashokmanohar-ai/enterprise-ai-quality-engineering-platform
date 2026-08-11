@@ -1,0 +1,26 @@
+authorization_required: true
+endpoint_type: openai
+scenarios:
+  smoke:
+    concurrency: 1
+    request_count: 5
+    warmup_requests: 1
+  load:
+    concurrency: 10
+    request_count: 100
+    warmup_requests: 5
+  stress:
+    concurrency: 30
+    request_count: 300
+    warmup_requests: 10
+  soak:
+    concurrency: 10
+    duration_seconds: 3600
+    warmup_requests: 10
+metrics:
+  - request_latency
+  - time_to_first_token
+  - inter_token_latency
+  - output_token_throughput
+  - request_throughput
+  - error_rate

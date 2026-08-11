@@ -1,0 +1,6 @@
+name: stress
+concurrency: 30
+request_count: 300
+warmup_request_count: 10
+concurrency_ramp_duration: 30
+streaming: true

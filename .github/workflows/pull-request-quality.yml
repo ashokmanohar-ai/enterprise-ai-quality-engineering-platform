@@ -1,0 +1,71 @@
+name: Pull Request AI Quality
+on:
+  pull_request:
+    paths-ignore: ["docs/**", "**/*.md"]
+permissions:
+  contents: read
+concurrency:
+  group: aiq-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
+      AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
+      AZURE_OPENAI_API_VERSION: ${{ vars.AZURE_OPENAI_API_VERSION }}
+      AZURE_OPENAI_CHAT_DEPLOYMENT: ${{ vars.AZURE_OPENAI_CHAT_DEPLOYMENT }}
+      AZURE_OPENAI_EVALUATOR_DEPLOYMENT: ${{ vars.AZURE_OPENAI_EVALUATOR_DEPLOYMENT }}
+      AIQ_ALLOW_LIVE_MODEL_CALLS: "true"
+      AIQ_MAX_EVALUATION_CASES: "20"
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12", cache: pip}
+      - uses: actions/setup-node@v4
+        with: {node-version: "24", cache: npm}
+      - run: python -m pip install -e '.[dev,llm,rag,mcp,security-garak]'
+      - run: npm ci
+      - name: Select expanded suites
+        id: changes
+        run: |
+          suites="$(python scripts/select_changed_suites.py '${{ github.event.pull_request.base.sha }}')"
+          echo "suites=$suites" >> "$GITHUB_OUTPUT"
+          echo "Expanded suites: $suites" >> "$GITHUB_STEP_SUMMARY"
+      - name: Static and deterministic tests
+        run: |
+          ruff check src tests
+          bash scripts/test_unit.sh
+          bash scripts/test_agents.sh
+          python -m pytest tests/mcp
+          python scripts/mark_suite.py mcp
+      - name: LLM and RAG smoke evaluations
+        run: |
+          selected=",${{ steps.changes.outputs.suites }},"
+          llm_cases=5
+          rag_cases=5
+          [[ "$selected" == *",llm,"* ]] && llm_cases=20
+          [[ "$selected" == *",rag,"* ]] && rag_cases=20
+          AIQ_MAX_EVALUATION_CASES="$llm_cases" bash scripts/test_llm.sh pr
+          AIQ_MAX_EVALUATION_CASES="$rag_cases" bash scripts/test_rag.sh pr
+      - name: Prompt regression
+        run: bash scripts/test_prompts.sh
+      - name: Security regression smoke
+        run: |
+          python -m pytest tests/regression
+          python scripts/mark_suite.py security_smoke
+      - name: Authorized application security smoke
+        if: github.event.pull_request.head.repo.full_name == github.repository && contains(steps.changes.outputs.suites, 'security_smoke')
+        env:
+          AIQ_SECURITY_AUTHORIZED: "true"
+        run: bash scripts/test_security.sh pr security_smoke
+      - name: Unified gate
+        run: python -m ai_quality.cli gate --profile pr
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ai-quality-pr-report
+          path: reports/
+          retention-days: 14

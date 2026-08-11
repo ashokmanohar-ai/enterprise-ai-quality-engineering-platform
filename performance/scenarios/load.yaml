@@ -1,0 +1,5 @@
+name: load
+concurrency: 10
+request_count: 100
+warmup_request_count: 5
+streaming: true

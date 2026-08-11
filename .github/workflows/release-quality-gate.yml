@@ -1,0 +1,49 @@
+name: Release AI Quality Gate
+on:
+  workflow_dispatch:
+    inputs:
+      baseline_ref: {description: "Production baseline ref", required: true, default: "main"}
+permissions: {contents: read}
+jobs:
+  release-gate:
+    environment: ai-release
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12", cache: pip}
+      - uses: actions/setup-node@v4
+        with: {node-version: "24", cache: npm}
+      - run: python -m pip install -e '.[dev,llm,rag,mcp,security-pyrit,security-garak,embeddings,performance,phoenix]'
+      - run: npm ci
+      - name: Complete release evaluation
+        env:
+          AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
+          AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
+          AZURE_OPENAI_CHAT_DEPLOYMENT: ${{ vars.AZURE_OPENAI_CHAT_DEPLOYMENT }}
+          AZURE_OPENAI_EVALUATOR_DEPLOYMENT: ${{ vars.AZURE_OPENAI_EVALUATOR_DEPLOYMENT }}
+          AZURE_OPENAI_EMBEDDING_DEPLOYMENT: ${{ vars.AZURE_OPENAI_EMBEDDING_DEPLOYMENT }}
+          AZURE_OPENAI_MODEL_A_DEPLOYMENT: ${{ vars.AZURE_OPENAI_MODEL_A_DEPLOYMENT }}
+          AZURE_OPENAI_MODEL_B_DEPLOYMENT: ${{ vars.AZURE_OPENAI_MODEL_B_DEPLOYMENT }}
+          AIQ_ALLOW_LIVE_MODEL_CALLS: "true"
+          AIQ_MAX_EVALUATION_CASES: "100"
+          AIQ_SECURITY_AUTHORIZED: "true"
+          AIQ_PERFORMANCE_AUTHORIZED: "true"
+        run: |
+          bash scripts/test_unit.sh
+          bash scripts/test_agents.sh
+          bash scripts/test_mcp.sh
+          bash scripts/test_llm.sh release
+          bash scripts/test_rag.sh release
+          bash scripts/test_prompts.sh release
+          python -m ai_quality.cli run --profile release --suite model_comparison
+          bash scripts/test_security.sh release security
+          bash scripts/test_embeddings.sh
+          bash scripts/test_performance.sh release
+          python scripts/compare_baseline.py
+          python -m ai_quality.cli gate --profile release
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: release-quality-evidence, path: reports/, retention-days: 90}

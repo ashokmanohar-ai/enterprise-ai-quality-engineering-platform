@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "acmecloud-support": {
+      "command": "python",
+      "args": ["-m", "ai_quality.mcp.server"]
+    }
+  }
+}

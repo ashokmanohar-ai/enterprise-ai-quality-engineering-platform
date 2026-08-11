@@ -1,0 +1,14 @@
+environments:
+  local:
+    live_model_calls: false
+    observability_backend: none
+    redact_content: true
+  ci:
+    live_model_calls: true
+    observability_backend: phoenix
+    redact_content: true
+  production:
+    live_model_calls: true
+    observability_backend: phoenix
+    redact_content: true
+    sample_rate: 0.10

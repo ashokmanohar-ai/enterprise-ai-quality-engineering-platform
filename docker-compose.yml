@@ -1,0 +1,27 @@
+services:
+  phoenix:
+    image: arizephoenix/phoenix:version-19.21.0
+    ports:
+      - "6006:6006"
+      - "4317:4317"
+    environment:
+      PHOENIX_WORKING_DIR: /data
+    volumes:
+      - phoenix-data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:6006/healthz')"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+  quality-runner:
+    build: .
+    env_file: [.env]
+    environment:
+      PHOENIX_ENDPOINT: http://phoenix:6006
+    depends_on:
+      phoenix:
+        condition: service_healthy
+    command: ["python", "-m", "ai_quality.cli", "validate"]
+
+volumes:
+  phoenix-data:

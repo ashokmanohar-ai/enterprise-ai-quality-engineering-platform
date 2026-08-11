@@ -1,0 +1,16 @@
+{
+  "name": "enterprise-ai-quality-engineering-platform",
+  "version": "0.1.0",
+  "private": true,
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "prompt:test": "promptfoo eval -c promptfoo/regression.yaml --no-cache",
+    "prompt:compare": "promptfoo eval -c promptfoo/model-comparison.yaml --no-cache",
+    "redteam:smoke": "promptfoo redteam run -c promptfoo/redteam.yaml",
+    "mcp:inspect": "mcp-inspector --cli python -m ai_quality.mcp.server --method tools/list"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/inspector": "2.0.0",
+    "promptfoo": "0.122.0"
+  }
+}

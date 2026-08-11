@@ -1,0 +1,5 @@
+name: smoke
+concurrency: 1
+request_count: 5
+warmup_request_count: 1
+streaming: true
