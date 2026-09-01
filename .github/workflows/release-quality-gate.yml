@@ -16,8 +16,13 @@ jobs:
         with: {python-version: "3.12", cache: pip}
       - uses: actions/setup-node@v4
         with: {node-version: "24", cache: npm}
-      - run: python -m pip install -e '.[dev,llm,rag,mcp,security-pyrit,security-garak,embeddings,performance,phoenix]'
+      - run: python -m pip install -e '.[dev,llm,rag,mcp,embeddings,performance,phoenix]'
       - run: npm ci
+      - name: Set up isolated security toolchain
+        run: |
+          python -m venv .venv-security
+          .venv-security/bin/python -m pip install --upgrade pip
+          .venv-security/bin/python -m pip install -e '.[security-pyrit,security-garak]'
       - name: Complete release evaluation
         env:
           AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
@@ -39,7 +44,7 @@ jobs:
           bash scripts/test_rag.sh release
           bash scripts/test_prompts.sh release
           python -m ai_quality.cli run --profile release --suite model_comparison
-          bash scripts/test_security.sh release security
+          PATH="$PWD/.venv-security/bin:$PATH" bash scripts/test_security.sh release security
           bash scripts/test_embeddings.sh
           bash scripts/test_performance.sh release
           python scripts/compare_baseline.py
