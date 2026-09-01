@@ -8,6 +8,33 @@ One integrated, Azure OpenAI-first control system for testing LLMs, RAG, agents,
 
 Verified against official documentation and stable releases on **2026-08-11**. See [Compatibility](#verified-compatibility) and [upgrade guidance](docs/COMPATIBILITY.md). AI tooling changes quickly; re-run the documented upgrade review before changing pins.
 
+## Recruiter quick tour
+
+<p align="center">
+  <img src="docs/assets/recruiter-walkthrough.gif" width="100%" alt="66-second recruiter walkthrough of the enterprise ai quality engineering platform" />
+</p>
+
+> **60-second decision:** this repository proves an enterprise AI-quality control system—not isolated framework demos—across LLM, RAG, agents, MCP, security, performance and observability.
+
+| Recruiter question | Verifiable answer |
+| --- | --- |
+| **Problem** | Teams cannot make an AI release decision from disconnected tool scores, dashboards and datasets. |
+| **Architecture** | One canonical case contract generates native inputs for DeepEval, Ragas, Promptfoo and other specialist tools; normalized results, baseline comparison and hard gates produce deploy/block evidence. |
+| **Evidence** | Versioned datasets and adapters, DeepEval/Ragas/Promptfoo execution, agent and MCP checks, authorized security profiles, Phoenix-first observability, offline validation, Docker and governed GitHub Actions. |
+| **Role signal** | AI Quality Engineer, AI Test Architect, LLM/RAG Evaluation Engineer and Responsible AI Test Engineer. |
+
+**Five-minute proof**
+
+```bash
+git clone https://github.com/ashokmanohar-ai/enterprise-ai-quality-engineering-platform.git
+cd enterprise-ai-quality-engineering-platform
+cp .env.example .env
+make setup
+make validate
+```
+
+Expected proof: validated configuration, datasets, contracts and MCP business rules without production credentials or live-model cost. All datasets, applications and walkthrough claims are synthetic/reference evidence unless explicitly stated otherwise.
+
 ## What this repository is
 
 This is not ten unrelated demos. Every tool consumes or observes the same fictional AcmeCloud support application through shared contracts:
