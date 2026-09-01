@@ -59,7 +59,8 @@ jobs:
           bash scripts/test_agents.sh
           python -m pytest tests/mcp
           python scripts/mark_suite.py mcp
-      - name: LLM and RAG smoke evaluations
+      - name: Live LLM and RAG smoke evaluations
+        if: steps.azure.outputs.enabled == 'true'
         run: |
           selected=",${{ steps.changes.outputs.suites }},"
           llm_cases=5
@@ -68,8 +69,17 @@ jobs:
           [[ "$selected" == *",rag,"* ]] && rag_cases=20
           AIQ_MAX_EVALUATION_CASES="$llm_cases" bash scripts/test_llm.sh pr
           AIQ_MAX_EVALUATION_CASES="$rag_cases" bash scripts/test_rag.sh pr
-      - name: Prompt regression
+      - name: Live prompt regression
+        if: steps.azure.outputs.enabled == 'true'
         run: bash scripts/test_prompts.sh
+      - name: Document credential-free scope
+        if: steps.azure.outputs.enabled != 'true'
+        run: |
+          {
+            echo "### Credential-free quality scope"
+            echo "Static checks, unit, agent, MCP and security-regression tests ran."
+            echo "Live Azure-backed LLM, RAG and Promptfoo suites were not marked complete."
+          } >> "$GITHUB_STEP_SUMMARY"
       - name: Security regression smoke
         run: |
           python -m pytest tests/regression
@@ -83,8 +93,12 @@ jobs:
           .venv-security/bin/python -m pip install --upgrade pip
           .venv-security/bin/python -m pip install -e '.[security-garak]'
           PATH="$PWD/.venv-security/bin:$PATH" bash scripts/test_security.sh pr security_smoke
-      - name: Unified gate
+      - name: Full AI quality gate
+        if: steps.azure.outputs.enabled == 'true'
         run: python -m ai_quality.cli gate --profile pr
+      - name: Credential-free deterministic gate
+        if: steps.azure.outputs.enabled != 'true'
+        run: python -m ai_quality.cli gate --profile pr --scope deterministic
       - uses: actions/upload-artifact@v4
         if: always()
         with:
