@@ -6,6 +6,8 @@ Verified 2026-08-11 against official project documentation, repositories, releas
 
 - PyRIT moved from the archived `Azure/PyRIT` notice repository to `microsoft/PyRIT`; stable package 1.0.1 uses executor-oriented attack APIs.
 - Ragas 0.4 moved to collections metrics and experiment-centric evaluation; new adapters use `ascore`/`MetricResult` and avoid deprecated `evaluate()`.
+- DeepEval 4.0.3 requires Rich below 15; the shared application environment pins Rich 14.2.0.
+- Garak 0.16 requires `datasets` below 4 while Ragas 0.4 requires `datasets` 4 or newer. CI installs Garak/PyRIT in an isolated security virtual environment and exchanges only canonical inputs and normalized results.
 - MCP Python SDK/Inspector v2 implement the 2026-07-28 protocol line. Python server examples use `MCPServer`, not the v1-only quickstart surface.
 - MCP Python SDK 2.0 requires Pydantic 2.12 or newer. The shared core pins Pydantic 2.13.4 and pydantic-settings 2.15.0 so the MCP extra resolves cleanly.
 - Promptfoo 0.122.0 dropped Node 20; use Node 24 in this repository.
