@@ -26,7 +26,7 @@ jobs:
         with: {python-version: "3.12", cache: pip}
       - uses: actions/setup-node@v4
         with: {node-version: "24", cache: npm}
-      - run: python -m pip install -e '.[dev,llm,rag,mcp,security-garak]'
+      - run: python -m pip install -e '.[dev,llm,rag,mcp]'
       - run: npm ci
       - name: Select expanded suites
         id: changes
@@ -57,10 +57,14 @@ jobs:
           python -m pytest tests/regression
           python scripts/mark_suite.py security_smoke
       - name: Authorized application security smoke
-        if: github.event.pull_request.head.repo.full_name == github.repository && contains(steps.changes.outputs.suites, 'security_smoke')
+        if: github.event.pull_request.head.repo.full_name == github.repository && contains(steps.changes.outputs.suites, 'security_smoke') && env.AZURE_OPENAI_API_KEY != '' && env.AZURE_OPENAI_ENDPOINT != ''
         env:
           AIQ_SECURITY_AUTHORIZED: "true"
-        run: bash scripts/test_security.sh pr security_smoke
+        run: |
+          python -m venv .venv-security
+          .venv-security/bin/python -m pip install --upgrade pip
+          .venv-security/bin/python -m pip install -e '.[security-garak]'
+          PATH="$PWD/.venv-security/bin:$PATH" bash scripts/test_security.sh pr security_smoke
       - name: Unified gate
         run: python -m ai_quality.cli gate --profile pr
       - uses: actions/upload-artifact@v4
