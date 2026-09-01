@@ -12,12 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
-      AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
-      AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
-      AZURE_OPENAI_API_VERSION: ${{ vars.AZURE_OPENAI_API_VERSION }}
-      AZURE_OPENAI_CHAT_DEPLOYMENT: ${{ vars.AZURE_OPENAI_CHAT_DEPLOYMENT }}
-      AZURE_OPENAI_EVALUATOR_DEPLOYMENT: ${{ vars.AZURE_OPENAI_EVALUATOR_DEPLOYMENT }}
-      AIQ_ALLOW_LIVE_MODEL_CALLS: "true"
       AIQ_MAX_EVALUATION_CASES: "20"
     steps:
       - uses: actions/checkout@v4
@@ -26,6 +20,30 @@ jobs:
         with: {python-version: "3.12", cache: pip}
       - uses: actions/setup-node@v4
         with: {node-version: "24", cache: npm}
+      - name: Configure optional Azure OpenAI runtime
+        id: azure
+        env:
+          AZURE_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
+          AZURE_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
+          AZURE_API_VERSION: ${{ vars.AZURE_OPENAI_API_VERSION }}
+          AZURE_CHAT_DEPLOYMENT: ${{ vars.AZURE_OPENAI_CHAT_DEPLOYMENT }}
+          AZURE_EVALUATOR_DEPLOYMENT: ${{ vars.AZURE_OPENAI_EVALUATOR_DEPLOYMENT }}
+        run: |
+          if [[ -n "$AZURE_KEY" && -n "$AZURE_ENDPOINT" && -n "$AZURE_API_VERSION" && -n "$AZURE_CHAT_DEPLOYMENT" && -n "$AZURE_EVALUATOR_DEPLOYMENT" ]]; then
+            {
+              echo "AZURE_OPENAI_API_KEY=$AZURE_KEY"
+              echo "AZURE_OPENAI_ENDPOINT=$AZURE_ENDPOINT"
+              echo "AZURE_OPENAI_API_VERSION=$AZURE_API_VERSION"
+              echo "AZURE_OPENAI_CHAT_DEPLOYMENT=$AZURE_CHAT_DEPLOYMENT"
+              echo "AZURE_OPENAI_EVALUATOR_DEPLOYMENT=$AZURE_EVALUATOR_DEPLOYMENT"
+              echo "AIQ_ALLOW_LIVE_MODEL_CALLS=true"
+            } >> "$GITHUB_ENV"
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "AIQ_ALLOW_LIVE_MODEL_CALLS=false" >> "$GITHUB_ENV"
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "Azure OpenAI configuration is incomplete; running deterministic evaluation paths." >> "$GITHUB_STEP_SUMMARY"
+          fi
       - run: python -m pip install -e '.[dev,llm,rag,mcp]'
       - run: npm ci
       - name: Select expanded suites
@@ -57,7 +75,7 @@ jobs:
           python -m pytest tests/regression
           python scripts/mark_suite.py security_smoke
       - name: Authorized application security smoke
-        if: github.event.pull_request.head.repo.full_name == github.repository && contains(steps.changes.outputs.suites, 'security_smoke') && env.AZURE_OPENAI_API_KEY != '' && env.AZURE_OPENAI_ENDPOINT != ''
+        if: github.event.pull_request.head.repo.full_name == github.repository && contains(steps.changes.outputs.suites, 'security_smoke') && steps.azure.outputs.enabled == 'true'
         env:
           AIQ_SECURITY_AUTHORIZED: "true"
         run: |
