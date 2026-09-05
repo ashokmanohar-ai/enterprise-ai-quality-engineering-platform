@@ -8,6 +8,16 @@ One integrated, Azure OpenAI-first control system for testing LLMs, RAG, agents,
 
 Verified against official documentation and stable releases on **2026-08-11**. See [Compatibility](#verified-compatibility) and [upgrade guidance](docs/COMPATIBILITY.md). AI tooling changes quickly; re-run the documented upgrade review before changing pins.
 
+## 📄 Technical White Paper
+
+**[Testing MCP-Powered AI Agents: Security, Authorization and Quality Engineering Patterns for Enterprise Tool-Connected AI](WHITEPAPER.md)**
+
+A practitioner-focused white paper for testing Model Context Protocol integrations as security-sensitive, evidence-bearing agent systems. It covers MCP protocol and contract testing, authentication, authorization, scope escalation, tool risk classification, business rules, tool selection and arguments, trajectories, human approval, prompt injection, tool poisoning, cross-tool security, tenant isolation, idempotency, caching, observability, performance, regression datasets and CI/CD quality gates.
+
+> **Core principle:** discovery is not permission. MCP must preserve authoritative application security boundaries, and trustworthy agent behavior must be proven from execution evidence—not final-response plausibility.
+
+Citation metadata is available in [`CITATION.cff`](CITATION.cff).
+
 ## Recruiter quick tour
 
 <p align="center">
