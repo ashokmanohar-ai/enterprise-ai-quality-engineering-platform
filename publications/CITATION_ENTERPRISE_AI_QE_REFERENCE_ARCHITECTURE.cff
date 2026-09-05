@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+message: "If you use or reference this work, please cite it using the metadata below."
+title: "Enterprise AI Quality Engineering: A Reference Architecture for Testing LLM, RAG, Agentic AI and MCP Systems"
+type: article
+authors:
+  - family-names: Manohar
+    given-names: Ashok Kumar
+version: 1.0.0
+date-released: 2026-09-05
+url: "https://github.com/ashokmanohar-ai/enterprise-ai-quality-engineering-platform/blob/main/publications/ENTERPRISE_AI_QUALITY_ENGINEERING_REFERENCE_ARCHITECTURE.md"
+repository-code: "https://github.com/ashokmanohar-ai/enterprise-ai-quality-engineering-platform"
+license: MIT
+keywords:
+  - Enterprise AI Quality Engineering
+  - AI Quality Engineering
+  - Reference Architecture
+  - LLM Evaluation
+  - RAG Evaluation
+  - Agentic AI
+  - AI Agents
+  - Model Context Protocol
+  - MCP
+  - AI Security
+  - AI Observability
+  - Human-in-the-Loop
+  - CI/CD
+  - Quality Gates
+  - Responsible AI
+  - AI Governance
+  - Prompt Testing
+  - Regression Testing
+abstract: >-
+  A practical enterprise reference architecture for testing and governing LLM,
+  RAG, agentic AI and MCP-enabled systems as one evidence-bearing software
+  system. The work defines an AI Quality Control Plane spanning conventional
+  software quality, probabilistic AI evaluation, retrieval quality, agent
+  trajectory quality, MCP contracts, identity and authorization, security,
+  human approval, observability, performance, cost, normalized evidence,
+  baseline comparison, CI/CD quality gates and production-to-regression learning.
