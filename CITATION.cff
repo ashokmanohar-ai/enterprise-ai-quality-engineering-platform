@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use or reference this work, please cite it using the metadata below."
+title: "Testing MCP-Powered AI Agents: Security, Authorization and Quality Engineering Patterns for Enterprise Tool-Connected AI"
+type: article
+authors:
+  - family-names: Manohar
+    given-names: Ashok Kumar
+version: 1.0.0
+date-released: 2026-09-05
+url: "https://github.com/ashokmanohar-ai/enterprise-ai-quality-engineering-platform/blob/main/WHITEPAPER.md"
+repository-code: "https://github.com/ashokmanohar-ai/enterprise-ai-quality-engineering-platform"
+license: MIT
+keywords:
+  - Model Context Protocol
+  - MCP
+  - Agentic AI
+  - AI Agents
+  - Quality Engineering
+  - AI Quality Engineering
+  - MCP Security
+  - Authorization
+  - OAuth
+  - Tool Use
+  - Tool Calling
+  - Human-in-the-Loop
+  - AI Governance
+  - Prompt Injection
+  - Enterprise AI
+abstract: >-
+  A practical Quality Engineering and security framework for testing MCP-powered
+  AI agents across protocol conformance, tool and resource contracts,
+  authentication, authorization, business rules, agent tool selection,
+  arguments, trajectories, human approval, prompt injection, tool poisoning,
+  tenant isolation, reliability, observability, performance and CI/CD release
+  gates. The work emphasizes that discovery is not permission, MCP must not
+  bypass authoritative application authorization, and agent quality must be
+  proven from execution evidence rather than final-response plausibility.
