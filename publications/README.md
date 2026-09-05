@@ -28,9 +28,26 @@ Focus: direct and indirect prompt injection, excessive agency, tool abuse, ident
 
 ---
 
+## 3. Enterprise AI Quality Engineering — Reference Architecture
+
+**Enterprise AI Quality Engineering: A Reference Architecture for Testing LLM, RAG, Agentic AI and MCP Systems**
+
+- [Read the white paper](ENTERPRISE_AI_QUALITY_ENGINEERING_REFERENCE_ARCHITECTURE.md)
+- [Citation metadata](CITATION_ENTERPRISE_AI_QE_REFERENCE_ARCHITECTURE.cff)
+- Version: 1.0
+- Published: September 2026
+
+Focus: enterprise AI Quality Control Plane, explicit quality contracts, deterministic-first controls, LLM/RAG/agent/MCP/prompt/embedding evaluation, authoritative identity and authorization, AI security, HITL approval, observability, normalized evidence, baseline comparison, risk-based CI/CD profiles, unified release gates and production-to-regression learning.
+
+> **Flagship architecture paper:** this publication connects the repository's specialist evaluation and security capabilities into one enterprise operating model for evidence-backed AI release decisions.
+
+---
+
 ## Reference Implementation
 
-Both publications are supported by the open-source [Enterprise AI Quality Engineering Platform](https://github.com/ashokmanohar-ai/enterprise-ai-quality-engineering-platform), which combines LLM, RAG, agent, MCP, security, performance and observability testing under one normalized quality-gate model.
+All three publications are supported by the open-source [Enterprise AI Quality Engineering Platform](https://github.com/ashokmanohar-ai/enterprise-ai-quality-engineering-platform), which combines LLM, RAG, agent, MCP, prompt, security, embedding, performance and observability testing under one normalized quality-gate model.
+
+The reference architecture assigns primary ownership to specialist tools rather than forcing every framework to test every concern. It uses canonical datasets, normalized evidence, baseline comparison and hard release gates so critical authorization, security or missing-evidence failures cannot disappear inside aggregate scores.
 
 Security testing in the reference implementation separates broad discovery, controlled reproduction and durable regression. The documented pattern is **Garak discovery → PyRIT exploration/reproduction → human confirmation → Promptfoo permanent regression**, with security profiles requiring explicit authorization before execution.
 
