@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: "If you use or reference this work, please cite it using the metadata below."
+title: "Agentic AI Security Testing: Prompt Injection, Tool Abuse, Excessive Agency and Data Leakage"
+type: article
+authors:
+  - family-names: Manohar
+    given-names: Ashok Kumar
+version: 1.0.0
+date-released: 2026-09-05
+url: "https://github.com/ashokmanohar-ai/enterprise-ai-quality-engineering-platform/blob/main/publications/AGENTIC_AI_SECURITY_TESTING.md"
+repository-code: "https://github.com/ashokmanohar-ai/enterprise-ai-quality-engineering-platform"
+license: MIT
+keywords:
+  - Agentic AI Security
+  - AI Security Testing
+  - Agentic AI
+  - Prompt Injection
+  - Indirect Prompt Injection
+  - Tool Abuse
+  - Excessive Agency
+  - Data Leakage
+  - AI Authorization
+  - AI Agent Identity
+  - MCP Security
+  - AI Red Teaming
+  - Quality Engineering
+  - AI Quality Engineering
+  - Human-in-the-Loop
+  - CI/CD
+abstract: >-
+  An evidence-driven Quality Engineering framework for security testing AI
+  agents across prompt injection, tool abuse, excessive agency, identity and
+  authorization, scope escalation, data leakage, tenant isolation, memory and
+  tool poisoning, human approval, repeated side effects, resource abuse,
+  observability, adversarial discovery, permanent security regression and CI/CD
+  release gates. The work emphasizes that agent reasoning may propose actions,
+  but authoritative identity, authorization, deterministic policy, least
+  privilege and human control must constrain execution.
