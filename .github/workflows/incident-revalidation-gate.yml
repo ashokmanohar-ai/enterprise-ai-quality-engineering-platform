@@ -1,0 +1,73 @@
+name: Incident Revalidation Recovery Gate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/ai_quality/incident_revalidation_gate.py'
+      - 'src/ai_quality/incident_regression_loop.py'
+      - 'src/ai_quality/trace_release_correlation.py'
+      - 'scripts/evaluate_incident_revalidation.py'
+      - 'scripts/build_incident_regression_asset.py'
+      - 'tests/unit/test_incident_revalidation_gate.py'
+      - 'examples/incident-regression.example.json'
+      - 'examples/incident-revalidation-results.example.json'
+      - 'examples/ai-system-passport*.json'
+      - '.github/workflows/incident-revalidation-gate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  revalidation-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install deterministic dependencies
+        run: python -m pip install -e '.[dev]'
+      - name: Run revalidation gate tests
+        run: python -m pytest tests/unit/test_incident_revalidation_gate.py
+      - name: Build incident-derived regression evidence
+        run: |
+          python scripts/build_incident_regression_asset.py \
+            --baseline examples/ai-system-passport.baseline.json \
+            --candidate examples/ai-system-passport.candidate.json \
+            --incident examples/incident-regression.example.json \
+            --trace-id trace-prod-demo-001
+      - name: Evaluate recovery gate
+        run: |
+          python scripts/evaluate_incident_revalidation.py \
+            --assurance-record reports/incident-assurance-record.json \
+            --regression-asset reports/incident-regression-asset.json \
+            --results examples/incident-revalidation-results.example.json
+      - name: Publish recovery summary
+        run: |
+          echo '## Incident Revalidation & Recovery Gate' >> "$GITHUB_STEP_SUMMARY"
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          from pathlib import Path
+          data = json.loads(Path('reports/incident-revalidation-decision.json').read_text())
+          print(f"- Incident: `{data['incident_id']}`")
+          print(f"- Regression asset: `{data['regression_asset_id']}`")
+          print(f"- Release: `{data['release_id']}`")
+          print(f"- Revalidation: `{data['revalidation_id']}`")
+          print(f"- Recovery decision: **{data['decision']}**")
+          print(f"- Blockers: **{len(data['blockers'])}**")
+          print(f"- Warnings: **{len(data['warnings'])}**")
+          print(f"- Decision SHA-256: `{data['integrity_sha256']}`")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: incident-revalidation-recovery-evidence
+          path: |
+            reports/incident-regression-asset.json
+            reports/incident-assurance-record.json
+            reports/incident-revalidation-decision.json
+          retention-days: 90
