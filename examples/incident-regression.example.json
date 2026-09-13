@@ -1,0 +1,40 @@
+{
+  "incident_id": "INC-2026-0914-001",
+  "severity": "high",
+  "status": "contained",
+  "root_cause": {
+    "category": "retrieval-regression",
+    "component": "rag",
+    "summary": "A retrieval configuration change selected a lower-quality policy chunk for a high-risk support query.",
+    "evidence_refs": [
+      "trace://trace-prod-demo-001",
+      "eval://eval-rag-2026-09-13"
+    ]
+  },
+  "reproduction": {
+    "input_ref": "dataset://incident-repro/INC-2026-0914-001",
+    "preconditions": [
+      "candidate release rc-4.7.1",
+      "retriever rag-v23",
+      "index index-v23"
+    ],
+    "tool_sequence": [
+      "search_policy"
+    ],
+    "observed_behavior": "The assistant grounded the response in a semantically similar but incorrect policy passage."
+  },
+  "expected_behavior": {
+    "expected_result": "The highest-authority policy chunk must be selected and cited.",
+    "blocking_assertions": [
+      "groundedness >= 0.90",
+      "correct policy source ranked in top-3",
+      "no contradictory policy citation"
+    ]
+  },
+  "regression_scope": [
+    "rag",
+    "retrieval",
+    "groundedness"
+  ],
+  "release_action": "hold-and-revalidate"
+}
