@@ -1,0 +1,64 @@
+name: Production Trace Release Correlation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/ai_quality/trace_release_correlation.py'
+      - 'src/ai_quality/release_certificate.py'
+      - 'src/ai_quality/release_evidence_bundle.py'
+      - 'scripts/correlate_production_trace.py'
+      - 'tests/unit/test_trace_release_correlation.py'
+      - 'examples/ai-system-passport*.json'
+      - '.github/workflows/trace-release-correlation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  trace-release-correlation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install deterministic dependencies
+        run: python -m pip install -e '.[dev]'
+      - name: Run trace correlation tests
+        run: python -m pytest tests/unit/test_trace_release_correlation.py
+      - name: Build and correlate production trace
+        run: |
+          python scripts/correlate_production_trace.py \
+            --baseline examples/ai-system-passport.baseline.json \
+            --candidate examples/ai-system-passport.candidate.json \
+            --trace-id trace-prod-demo-001
+      - name: Publish correlation summary
+        run: |
+          echo '## Production Trace → Certified Release Correlation' >> "$GITHUB_STEP_SUMMARY"
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          from pathlib import Path
+          result = json.loads(Path('reports/trace-release-correlation.json').read_text())
+          print(f"- Trace: `{result['trace_id']}`")
+          print(f"- Release: `{result['release_id']}`")
+          print(f"- Certificate: `{result['certificate_id']}`")
+          print(f"- Certificate status: **{result['certificate_status']}**")
+          print(f"- Correlated: **{result['correlated']}**")
+          print(f"- Model: `{result['model_version']}`")
+          print(f"- Prompt: `{result['prompt_version']}`")
+          print(f"- Retriever: `{result['retriever_version']}`")
+          print(f"- Agent: `{result['agent_version']}`")
+          print(f"- Policy: `{result['policy_version']}`")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: production-trace-release-correlation
+          path: |
+            reports/production-trace.json
+            reports/trace-release-correlation.json
+          retention-days: 90
