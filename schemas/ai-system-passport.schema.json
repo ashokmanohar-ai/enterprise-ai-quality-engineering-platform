@@ -1,0 +1,216 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ashokmanohar-ai/enterprise-ai-quality-engineering-platform/schemas/ai-system-passport.schema.json",
+  "title": "AI System Passport",
+  "description": "Provider-neutral assurance record correlating AI system identity, components, evaluation, governance, release, production observability and incidents.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "passport_version",
+    "identity",
+    "release",
+    "components",
+    "security",
+    "quality",
+    "human_review",
+    "release_gate",
+    "observability",
+    "incident",
+    "assurance"
+  ],
+  "properties": {
+    "passport_version": {"type": "string", "const": "1.0"},
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["system_id", "system_name", "system_version", "criticality", "environment"],
+      "properties": {
+        "system_id": {"type": "string", "minLength": 1},
+        "system_name": {"type": "string", "minLength": 1},
+        "system_version": {"type": "string", "minLength": 1},
+        "owner": {"type": "string"},
+        "criticality": {"type": "string", "enum": ["low", "medium", "high", "critical"]},
+        "environment": {"type": "string", "enum": ["development", "test", "staging", "production"]}
+      }
+    },
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["release_id", "commit_sha", "status"],
+      "properties": {
+        "release_id": {"type": "string", "minLength": 1},
+        "commit_sha": {"type": "string", "minLength": 7},
+        "created_at": {"type": ["string", "null"], "format": "date-time"},
+        "promoted_at": {"type": ["string", "null"], "format": "date-time"},
+        "status": {"type": "string", "enum": ["draft", "evaluated", "reviewed", "gate-checked", "canary-ready", "promoted", "certified", "blocked", "rolled-back"]}
+      }
+    },
+    "components": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["data", "rag", "prompt", "model", "agent"],
+      "properties": {
+        "data": {"$ref": "#/$defs/dataComponent"},
+        "rag": {"$ref": "#/$defs/ragComponent"},
+        "prompt": {"$ref": "#/$defs/promptComponent"},
+        "model": {"$ref": "#/$defs/modelComponent"},
+        "agent": {"$ref": "#/$defs/agentComponent"}
+      }
+    },
+    "security": {"$ref": "#/$defs/security"},
+    "quality": {"$ref": "#/$defs/quality"},
+    "human_review": {"$ref": "#/$defs/humanReview"},
+    "release_gate": {"$ref": "#/$defs/releaseGate"},
+    "observability": {"$ref": "#/$defs/observability"},
+    "incident": {"$ref": "#/$defs/incident"},
+    "assurance": {"$ref": "#/$defs/assurance"}
+  },
+  "$defs": {
+    "dataComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "dataset_id": {"type": ["string", "null"]},
+        "source_versions": {"type": "array", "items": {"type": "string"}},
+        "lineage_refs": {"type": "array", "items": {"type": "string"}},
+        "quality_status": {"type": "string", "enum": ["pass", "warn", "fail", "unknown"]}
+      },
+      "required": ["quality_status"]
+    },
+    "ragComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "retriever_version": {"type": ["string", "null"]},
+        "index_version": {"type": ["string", "null"]},
+        "embedding_model": {"type": ["string", "null"]},
+        "chunking_version": {"type": ["string", "null"]},
+        "retrieval_eval_id": {"type": ["string", "null"]},
+        "precision_at_k": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "recall_at_k": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "mrr": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "ndcg": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "groundedness": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "hallucination_risk": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+      }
+    },
+    "promptComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "prompt_version": {"type": ["string", "null"]},
+        "template_hash": {"type": ["string", "null"]},
+        "policy_refs": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "modelComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "model_version": {"type": ["string", "null"]},
+        "provider": {"type": ["string", "null"]},
+        "evaluator_model_version": {"type": ["string", "null"]}
+      }
+    },
+    "agentComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "agent_version": {"type": ["string", "null"]},
+        "mcp_servers": {"type": "array", "items": {"type": "string"}},
+        "tools": {"type": "array", "items": {"type": "string"}},
+        "delegated_purpose": {"type": ["string", "null"]},
+        "tool_policy_version": {"type": ["string", "null"]}
+      }
+    },
+    "security": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["least_privilege_status", "confused_deputy_check", "policy_violations"],
+      "properties": {
+        "authorization_decision_id": {"type": ["string", "null"]},
+        "requester_identity": {"type": ["string", "null"]},
+        "agent_identity": {"type": ["string", "null"]},
+        "least_privilege_status": {"type": "string", "enum": ["pass", "warn", "fail", "unknown"]},
+        "confused_deputy_check": {"type": "string", "enum": ["pass", "warn", "fail", "unknown"]},
+        "policy_violations": {"type": "array", "items": {"type": "string"}},
+        "red_team_campaign_id": {"type": ["string", "null"]}
+      }
+    },
+    "quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evaluation_id", "functional_status", "safety_status", "blocking_findings"],
+      "properties": {
+        "evaluation_id": {"type": "string", "minLength": 1},
+        "dataset_id": {"type": ["string", "null"]},
+        "functional_status": {"$ref": "#/$defs/status"},
+        "safety_status": {"$ref": "#/$defs/status"},
+        "groundedness_status": {"$ref": "#/$defs/status"},
+        "agent_task_success_status": {"$ref": "#/$defs/status"},
+        "performance_status": {"$ref": "#/$defs/status"},
+        "blocking_findings": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "humanReview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "decision"],
+      "properties": {
+        "required": {"type": "boolean"},
+        "reviewer": {"type": ["string", "null"]},
+        "decision": {"type": "string", "enum": ["approved", "rejected", "pending", "not-required"]},
+        "reviewed_at": {"type": ["string", "null"], "format": "date-time"},
+        "rationale": {"type": ["string", "null"]},
+        "artifact_hash": {"type": ["string", "null"]}
+      }
+    },
+    "releaseGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy_version", "gate_status", "rollback_plan_id"],
+      "properties": {
+        "policy_version": {"type": "string", "minLength": 1},
+        "gate_status": {"type": "string", "enum": ["pass", "fail", "conditional", "pending"]},
+        "evidence_bundle_id": {"type": ["string", "null"]},
+        "rollback_plan_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "observability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slo_status", "drift_status", "cost_status"],
+      "properties": {
+        "production_trace_ids": {"type": "array", "items": {"type": "string"}},
+        "slo_status": {"$ref": "#/$defs/status"},
+        "drift_status": {"$ref": "#/$defs/status"},
+        "cost_status": {"$ref": "#/$defs/status"}
+      }
+    },
+    "incident": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["incident_ids", "active_critical_incident", "rollback_executed"],
+      "properties": {
+        "incident_ids": {"type": "array", "items": {"type": "string"}},
+        "active_critical_incident": {"type": "boolean"},
+        "last_incident_id": {"type": ["string", "null"]},
+        "root_cause_ref": {"type": ["string", "null"]},
+        "rollback_executed": {"type": "boolean"},
+        "revalidation_id": {"type": ["string", "null"]}
+      }
+    },
+    "assurance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["overall_status", "residual_risks", "exceptions", "evidence_refs"],
+      "properties": {
+        "overall_status": {"type": "string", "enum": ["release-ready", "conditional", "blocked", "under-review", "rolled-back"]},
+        "residual_risks": {"type": "array", "items": {"type": "string"}},
+        "exceptions": {"type": "array", "items": {"type": "string"}},
+        "evidence_refs": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "status": {"type": "string", "enum": ["pass", "warn", "fail", "unknown"]}
+  }
+}
