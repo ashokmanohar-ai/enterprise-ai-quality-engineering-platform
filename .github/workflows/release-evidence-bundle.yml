@@ -1,0 +1,41 @@
+name: AI Release Evidence Bundle
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/ai_quality/release_evidence_bundle.py"
+      - "scripts/build_release_evidence_bundle.py"
+      - "tests/unit/test_release_evidence_bundle.py"
+      - "examples/ai-system-passport*.json"
+      - ".github/workflows/release-evidence-bundle.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  release-evidence-bundle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install deterministic dependencies
+        run: python -m pip install -e '.[dev]'
+      - name: Run release evidence bundle tests
+        run: python -m pytest tests/unit/test_release_evidence_bundle.py
+      - name: Build AI release evidence bundle
+        run: |
+          python scripts/build_release_evidence_bundle.py \
+            --baseline examples/ai-system-passport.baseline.json \
+            --candidate examples/ai-system-passport.candidate.json
+      - name: Publish bundle summary
+        run: cat reports/release-evidence-bundle.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ai-release-evidence-bundle
+          path: |
+            reports/release-evidence-bundle.json
+            reports/release-evidence-bundle.md
+          retention-days: 90
