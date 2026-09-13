@@ -1,0 +1,66 @@
+name: Incident Regression Assurance Loop
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/ai_quality/incident_regression_loop.py'
+      - 'src/ai_quality/trace_release_correlation.py'
+      - 'src/ai_quality/release_certificate.py'
+      - 'src/ai_quality/release_evidence_bundle.py'
+      - 'scripts/build_incident_regression_asset.py'
+      - 'tests/unit/test_incident_regression_loop.py'
+      - 'examples/incident-regression.example.json'
+      - 'examples/ai-system-passport*.json'
+      - '.github/workflows/incident-regression-loop.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  incident-regression-loop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install deterministic dependencies
+        run: python -m pip install -e '.[dev]'
+      - name: Run incident regression loop tests
+        run: python -m pytest tests/unit/test_incident_regression_loop.py
+      - name: Build incident-derived regression asset
+        run: |
+          python scripts/build_incident_regression_asset.py \
+            --baseline examples/ai-system-passport.baseline.json \
+            --candidate examples/ai-system-passport.candidate.json \
+            --incident examples/incident-regression.example.json \
+            --trace-id trace-prod-demo-001
+      - name: Publish assurance-loop summary
+        run: |
+          echo '## Incident → Trace → Certificate → Root Cause → Regression Asset' >> "$GITHUB_STEP_SUMMARY"
+          echo '' >> "$GITHUB_STEP_SUMMARY"
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          from pathlib import Path
+          record = json.loads(Path('reports/incident-assurance-record.json').read_text())
+          print(f"- Incident: `{record['incident_id']}`")
+          print(f"- Severity: **{record['severity']}**")
+          print(f"- Trace: `{record['trace_id']}`")
+          print(f"- Release: `{record['release_id']}`")
+          print(f"- Certificate: `{record['certificate_id']}`")
+          print(f"- Trace correlated: **{record['trace_correlated']}**")
+          print(f"- Root cause component: `{record['root_cause']['component']}`")
+          print(f"- Regression asset: `{record['regression_asset_id']}`")
+          print(f"- Release action: **{record['release_action']}**")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: incident-regression-assurance
+          path: |
+            reports/incident-regression-asset.json
+            reports/incident-assurance-record.json
+          retention-days: 90
