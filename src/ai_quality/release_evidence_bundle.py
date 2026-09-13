@@ -1,13 +1,13 @@
 from __future__ import annotations
 
+import json
 from dataclasses import asdict, dataclass
 from datetime import UTC, datetime
 from hashlib import sha256
 from typing import Any
-import json
 
-from ai_quality.passport_engine import evaluate_passport
 from ai_quality.passport_diff import compare_passports
+from ai_quality.passport_engine import evaluate_passport
 
 
 @dataclass(frozen=True)
@@ -42,8 +42,8 @@ def build_release_evidence_bundle(
     baseline: dict[str, Any],
     candidate: dict[str, Any],
 ) -> ReleaseEvidenceBundle:
-    passport_decision = evaluate_passport(candidate).to_dict()
-    comparison = compare_passports(baseline, candidate).to_dict()
+    passport_decision = asdict(evaluate_passport(candidate))
+    comparison = asdict(compare_passports(baseline, candidate))
 
     identity = candidate["identity"]
     release = candidate["release"]
