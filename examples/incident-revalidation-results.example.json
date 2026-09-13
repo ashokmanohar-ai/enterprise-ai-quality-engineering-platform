@@ -1,0 +1,20 @@
+{
+  "revalidation_id": "revalidate-inc-2026-09-001",
+  "incident_reproduction": "pass",
+  "targeted_regression": "pass",
+  "safety_regression": "pass",
+  "authorization_regression": "pass",
+  "root_cause_fix_verified": "pass",
+  "rollback_readiness": "pass",
+  "human_approval": "pass",
+  "rollback_required": false,
+  "residual_risks": [
+    "Continue enhanced monitoring for the affected retrieval path for one release window."
+  ],
+  "evidence_refs": [
+    "evidence://revalidation/inc-2026-09-001/targeted-regression",
+    "evidence://revalidation/inc-2026-09-001/safety",
+    "evidence://revalidation/inc-2026-09-001/authorization",
+    "evidence://revalidation/inc-2026-09-001/human-approval"
+  ]
+}
