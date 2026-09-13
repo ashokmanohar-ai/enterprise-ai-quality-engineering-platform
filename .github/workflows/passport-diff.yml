@@ -1,0 +1,56 @@
+name: AI System Passport Diff
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/ai_quality/passport_diff.py'
+      - 'scripts/compare_ai_system_passports.py'
+      - 'tests/unit/test_passport_diff.py'
+      - 'examples/ai-system-passport.baseline.json'
+      - 'examples/ai-system-passport.candidate.json'
+      - '.github/workflows/passport-diff.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  passport-diff:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install deterministic dependencies
+        run: python -m pip install -e '.[dev]'
+      - name: Run Passport diff unit tests
+        run: python -m pytest tests/unit/test_passport_diff.py
+      - name: Compare production and candidate passports
+        run: |
+          python scripts/compare_ai_system_passports.py \
+            examples/ai-system-passport.baseline.json \
+            examples/ai-system-passport.candidate.json \
+            --output reports/passport-diff.json
+      - name: Publish comparison summary
+        run: |
+          echo '### AI System Passport Release Comparison' >> "$GITHUB_STEP_SUMMARY"
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          from pathlib import Path
+          data = json.loads(Path('reports/passport-diff.json').read_text())
+          print(f"- Recommendation: **{data['recommendation']}**")
+          print(f"- Risk level: **{data['risk_level']}**")
+          print(f"- Approval changed: **{data['approval_changed']}**")
+          print(f"- Changed controls/components: **{len(data['changes'])}**")
+          print(f"- New blockers: **{len(data['new_blockers'])}**")
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ai-system-passport-diff
+          path: reports/passport-diff.json
+          retention-days: 30
