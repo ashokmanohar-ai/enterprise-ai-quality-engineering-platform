@@ -1,0 +1,19 @@
+{
+  "passport_version": "1.0",
+  "identity": {"system_id":"acme-support-ai","system_name":"Acme Support AI","system_version":"4.7.0","owner":"AI Platform Team","criticality":"high","environment":"production"},
+  "release": {"release_id":"prod-4.7.0","commit_sha":"9aa7c0ffee77","created_at":"2026-09-10T12:00:00Z","promoted_at":"2026-09-10T15:00:00Z","status":"certified"},
+  "components": {
+    "data": {"dataset_id":"support-golden-v11","source_versions":["policy-corpus-v30"],"lineage_refs":["lineage://support/policy-corpus-v30"],"quality_status":"pass"},
+    "rag": {"retriever_version":"rag-v22","index_version":"index-v22","embedding_model":"all-MiniLM-L6-v2","chunking_version":"chunk-v8","retrieval_eval_id":"eval-rag-2026-09-10","precision_at_k":0.91,"recall_at_k":0.89,"mrr":0.94,"ndcg":0.92,"groundedness":0.93,"hallucination_risk":0.04},
+    "prompt": {"prompt_version":"prompt-v11","template_hash":"sha256:oldprompt","policy_refs":["policy://prompt/safe-support-v5"]},
+    "model": {"model_version":"support-model-prod","provider":"azure-openai","evaluator_model_version":"evaluator-deployment-v3"},
+    "agent": {"agent_version":"agent-v8","mcp_servers":["support-tools-mcp"],"tools":["get_ticket","create_ticket","search_policy"],"delegated_purpose":"customer-support","tool_policy_version":"tool-policy-v5"}
+  },
+  "security": {"authorization_decision_id":"authz-100","requester_identity":"user-1024","agent_identity":"support-agent-prod","least_privilege_status":"pass","confused_deputy_check":"pass","policy_violations":[],"red_team_campaign_id":"redteam-2026-08"},
+  "quality": {"evaluation_id":"eval-2026-09-10-001","dataset_id":"release-regression-v13","functional_status":"pass","safety_status":"pass","groundedness_status":"pass","agent_task_success_status":"pass","performance_status":"pass","blocking_findings":[]},
+  "human_review": {"required":true,"reviewer":"release-approver","decision":"approved","reviewed_at":"2026-09-10T14:45:00Z","rationale":"Release controls passed.","artifact_hash":"sha256:prod470"},
+  "release_gate": {"policy_version":"high-assurance-v3","gate_status":"pass","evidence_bundle_id":"bundle-prod-4.7.0","rollback_plan_id":"rollback-4.7.0"},
+  "observability": {"production_trace_ids":["trace-6f10"],"slo_status":"pass","drift_status":"pass","cost_status":"pass"},
+  "incident": {"incident_ids":[],"active_critical_incident":false,"last_incident_id":null,"root_cause_ref":null,"rollback_executed":false,"revalidation_id":null},
+  "assurance": {"overall_status":"release-ready","residual_risks":[],"exceptions":[],"evidence_refs":["evidence://release/bundle-prod-4.7.0"]}
+}
