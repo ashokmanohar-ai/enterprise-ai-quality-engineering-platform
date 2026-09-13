@@ -1,62 +1,211 @@
 # Enterprise AI Quality Engineering Platform
 
-One integrated, Azure OpenAI-first control system for testing LLMs, RAG, agents, MCP servers, prompts, embeddings, security, performance, and production traces.
+**Ashok Kumar Manohar**  
+**Test Architect | AI Quality Engineer | Forward Deployed AI Engineer | Agentic AI | RAG & LLM Evaluation | MCP | Playwright | API Automation | CI/CD**
 
-> **Enterprise LLM quality is not a single benchmark. It is a continuous engineering control system.**
+> **Engineering Quality for the AI Era**
+
+One integrated AI Quality Engineering and Assurance platform for testing LLMs, RAG systems, agents, MCP servers, prompts, embeddings, security, performance, human review, release readiness and production traces.
+
+The goal is simple:
+
+> **Can we prove that an AI system is reliable, safe, explainable, governed and ready for production?**
 
 [![Pull Request AI Quality](https://github.com/ashokmanohar-ai/enterprise-ai-quality-engineering-platform/actions/workflows/pull-request-quality.yml/badge.svg)](https://github.com/ashokmanohar-ai/enterprise-ai-quality-engineering-platform/actions/workflows/pull-request-quality.yml)
 
-Verified against official documentation and stable releases on **2026-08-11**. See [Compatibility](#verified-compatibility) and [upgrade guidance](docs/COMPATIBILITY.md). AI tooling changes quickly; re-run the documented upgrade review before changing pins.
+---
 
-## 📄 Technical White Paper
+## Recruiter Quick Tour
 
-**[Testing MCP-Powered AI Agents: Security, Authorization and Quality Engineering Patterns for Enterprise Tool-Connected AI](WHITEPAPER.md)**
+This repository is the technical anchor for a wider **24-application AI Assurance portfolio** covering the full lifecycle:
 
-A practitioner-focused white paper for testing Model Context Protocol integrations as security-sensitive, evidence-bearing agent systems. It covers MCP protocol and contract testing, authentication, authorization, scope escalation, tool risk classification, business rules, tool selection and arguments, trajectories, human approval, prompt injection, tool poisoning, cross-tool security, tenant isolation, idempotency, caching, observability, performance, regression datasets and CI/CD quality gates.
+**Data → RAG → Prompt → Model → Agent/MCP → Security → Evaluation → Human Review → Release → Observability → Incident Response → Governance**
 
-> **Core principle:** discovery is not permission. MCP must preserve authoritative application security boundaries, and trustworthy agent behavior must be proven from execution evidence—not final-response plausibility.
+### Start here
 
-Citation metadata is available in [`CITATION.cff`](CITATION.cff).
+**Enterprise AI Quality Portfolio & Recruiter Showcase**  
+https://enterprise-ai-quality-portfolio-recruiter-showcase-v700x0.v2.appdeploy.ai/
 
-## Recruiter quick tour
+### Five-minute recruiter demo path
 
-<p align="center">
-  <img src="docs/assets/recruiter-walkthrough.gif" width="100%" alt="66-second recruiter walkthrough of the enterprise ai quality engineering platform" />
-</p>
+1. Portfolio Showcase
+2. RAG Evaluation Workbench
+3. Agent Identity, MCP & Tool Governance
+4. AI Release Assurance & Governance
+5. AI Observability & Production Monitoring
+6. FHIR AI Quality Lab
 
-> **60-second decision:** this repository proves an enterprise AI-quality control system—not isolated framework demos—across LLM, RAG, agents, MCP, security, performance and observability.
+The objective is not to show 24 dashboards. The objective is to show **one production AI assurance story**.
 
-| Recruiter question | Verifiable answer |
-| --- | --- |
-| **Problem** | Teams cannot make an AI release decision from disconnected tool scores, dashboards and datasets. |
-| **Architecture** | One canonical case contract generates native inputs for DeepEval, Ragas, Promptfoo and other specialist tools; normalized results, baseline comparison and hard gates produce deploy/block evidence. |
-| **Evidence** | Versioned datasets and adapters, DeepEval/Ragas/Promptfoo execution, agent and MCP checks, authorized security profiles, Phoenix-first observability, offline validation, Docker and governed GitHub Actions. |
-| **Role signal** | AI Quality Engineer, AI Test Architect, LLM/RAG Evaluation Engineer and Responsible AI Test Engineer. |
+---
 
-**Five-minute proof**
+## Flagship Applications
 
-```bash
-git clone https://github.com/ashokmanohar-ai/enterprise-ai-quality-engineering-platform.git
-cd enterprise-ai-quality-engineering-platform
-cp .env.example .env
-make setup
-make validate
+### 1. AI Release Assurance & Governance Control Plane
+
+https://ai-release-assurance-governance-control-plane-8414td.v2.appdeploy.ai/
+
+Demonstrates:
+- Policy-as-code release gates
+- Quality and safety thresholds
+- Human approval requirements
+- Evidence bundles
+- Canary readiness
+- Rollback contracts
+- Release certification
+- Audit-ready decisions
+
+**Engineering signal:** AI release governance, production assurance and CI/CD quality gates.
+
+### 2. Agent Identity, MCP & Tool Governance Studio
+
+https://agent-identity-mcp-tool-governance-studio-u3tp1t.v2.appdeploy.ai/
+
+Demonstrates:
+- Agent identity lifecycle
+- MCP server attestation
+- Tool permission scopes
+- Delegated authorization
+- Runtime policy decisions
+- Human approval boundaries
+- Policy violations
+- Emergency revocation
+
+**Engineering signal:** Agentic AI security, MCP governance and enterprise authorization.
+
+### 3. RAG Evaluation Workbench
+
+https://rag-evaluation-workbench-osc94p.v2.appdeploy.ai/
+
+Demonstrates:
+- Query-level retrieval traces
+- Precision / Recall / MRR / NDCG
+- Groundedness evaluation
+- Hallucination-risk analysis
+- Chunk attribution
+- Failure clustering
+- Hard-negative testing
+- Baseline-vs-candidate regression
+- Promotion eligibility
+
+**Engineering signal:** RAG evaluation, LLM quality engineering and retrieval observability.
+
+### 4. AI Observability & Production Monitoring Center
+
+https://ai-observability-production-monitoring-center-8e6rp3.v2.appdeploy.ai/
+
+Demonstrates:
+- Trace-level observability
+- Model/prompt/retriever/tool correlation
+- SLO monitoring
+- Error-budget burn
+- Drift and anomaly signals
+- Release markers
+- Cost attribution
+- Incident linkage
+- Known-good baseline comparison
+
+**Engineering signal:** Production AI reliability, observability and operational quality.
+
+### 5. AI Red Team & Safety Evaluation Center
+
+https://ai-red-team-safety-evaluation-center-okdouh.v2.appdeploy.ai/
+
+Demonstrates:
+- Adversarial test scenarios
+- Safety evaluation
+- Severity and exploitability scoring
+- Remediation verification
+- Regression packs
+- Safety release gates
+
+**Engineering signal:** AI safety engineering and adversarial quality assurance.
+
+### 6. FHIR AI Quality Lab
+
+https://fhir-ai-quality-lab-d56846.v2.appdeploy.ai/
+
+Demonstrates:
+- FHIR profile validation
+- Terminology checks
+- Reference and cardinality validation
+- SMART-on-FHIR scope controls
+- PHI handling evidence
+- Clinical provenance
+- Grounded clinical-summary evaluation
+- Hallucination thresholds
+- Healthcare regression packs
+- Clinician-review boundaries
+
+**Engineering signal:** Healthcare AI quality, interoperability and regulated-domain assurance.
+
+---
+
+## End-to-End Assurance Architecture
+
+```text
+Source Data
+   ↓
+Data Quality & Lineage
+   ↓
+RAG / Retrieval
+   ↓
+Prompt + Model
+   ↓
+Agent / MCP
+   ↓
+Security & Authorization
+   ↓
+Automated Evaluation
+   ↓
+Red Team / Safety
+   ↓
+Human Evaluation
+   ↓
+Release Gate
+   ↓
+Production Observability
+   ↓
+Incident Detection
+   ↓
+Forensics / Rollback
+   ↓
+Revalidation
+   ↓
+Governance Evidence
 ```
 
-Expected proof: validated configuration, datasets, contracts and MCP business rules without production credentials or live-model cost. All datasets, applications and walkthrough claims are synthetic/reference evidence unless explicitly stated otherwise.
+### Production evidence chain
 
-## What this repository is
+```text
+Requirement / Source
+→ Document
+→ Chunk
+→ Retrieval
+→ Prompt
+→ Model
+→ Agent
+→ MCP Server
+→ Tool
+→ Authorization Decision
+→ Evaluation
+→ Safety Check
+→ Human Approval
+→ Release
+→ Production Trace
+→ Incident
+→ RCA
+→ Rollback
+→ Revalidation
+```
 
-This is not ten unrelated demos. Every tool consumes or observes the same fictional AcmeCloud support application through shared contracts:
+The target is a connected evidence model using a shared **System ID / Trace ID / Release ID**.
 
-- one Azure OpenAI configuration layer;
-- one customer-support LLM, policy RAG assistant, deterministic agent, and MCP server;
-- one canonical golden dataset with generated native adapters;
-- one normalized evaluation/finding/performance result model;
-- one experiment metadata contract;
-- one baseline comparison and quality-gate engine;
-- one Phoenix-first, Langfuse-optional observability interface;
-- one production-to-regression feedback loop.
+---
+
+## What this Repository Proves
+
+This is not a collection of disconnected framework demos. It models an enterprise AI-quality control system with shared contracts, shared datasets, normalized results, baseline comparison, governed release gates and production feedback.
 
 AI quality is modeled as:
 
@@ -64,23 +213,27 @@ $$
 Q_{AI}=Q_{functional}+Q_{groundedness}+Q_{retrieval}+Q_{prompt}+Q_{agent}+Q_{security}+Q_{performance}+Q_{operability}
 $$
 
-No weighted average can hide a blocking critical case.
+No weighted average should be allowed to hide a blocking critical case.
 
-## Tool ownership
+---
+
+## Tool Ownership
 
 | Tool | Main role | Supporting role |
 |---|---|---|
-| DeepEval 4.0.3 | LLM unit tests, G-Eval, agent metrics | pytest integration |
-| Ragas 0.4.3 | RAG retrieval and generation evaluation | failure localization |
-| Promptfoo 0.122.0 | Prompt regression, model comparison, CI assertions | repeatable red-team regression |
-| PyRIT 1.0.1 | Adaptive/orchestrated adversarial campaigns | reproduction and exploration |
-| Garak 0.16.0 | Broad, scoped vulnerability discovery | nightly probe coverage |
-| MTEB 2.18.16 | Embedding benchmark shortlist | candidate comparison |
-| MCP SDK / Inspector 2.0.0 | Protocol server and interactive/CLI inspection | CI discovery smoke check |
-| AIPerf 0.12.0 | Inference latency, throughput, concurrency, and load | performance regression |
-| Phoenix 19.21.0 | Primary traces, datasets, evaluations, experiments | troubleshooting |
-| Langfuse 4.14.3 | Optional alternative tracing backend | scores and experiments |
-| GitHub Actions | Governed PR, nightly, and release gates | retained evidence |
+| DeepEval | LLM unit tests, G-Eval, agent metrics | pytest integration |
+| Ragas | RAG retrieval and generation evaluation | failure localization |
+| Promptfoo | Prompt regression, model comparison, CI assertions | repeatable red-team regression |
+| PyRIT | Adaptive adversarial campaigns | reproduction and exploration |
+| Garak | Scoped vulnerability discovery | nightly probe coverage |
+| MTEB | Embedding benchmark shortlist | candidate comparison |
+| MCP SDK / Inspector | Protocol validation and tool inspection | CI discovery smoke check |
+| AIPerf | Inference latency, throughput, concurrency and load | performance regression |
+| Phoenix | Primary traces, datasets, evaluations and experiments | troubleshooting |
+| Langfuse | Optional tracing backend | scores and experiments |
+| GitHub Actions | Governed PR, nightly and release gates | retained evidence |
+
+---
 
 ## Architecture
 
@@ -100,7 +253,7 @@ flowchart TB
     B --> D
 ```
 
-The security flow is deliberate:
+Security findings follow a deliberate lifecycle:
 
 ```mermaid
 flowchart LR
@@ -109,22 +262,23 @@ flowchart LR
     F --> C["Promptfoo: permanent CI regression"]
 ```
 
-## Shared fictional application
+---
 
-AcmeCloud is synthetic. Its shared policy corpus covers refunds, cancellation, billing, password resets, support hours, deletion, retention, warranty, shipping, enterprise support, and security escalation.
+## Shared Fictional Application
 
-The platform exposes:
+The platform uses a synthetic AcmeCloud support application so evaluation evidence can be reproduced safely.
 
+It includes:
 1. `CustomerSupportLLM` — ordinary policy support.
 2. `PolicyRAGAssistant` — one retriever and grounded generator.
 3. `DeterministicSupportAgent` — safe mock tools and business rules.
-4. `AcmeCloud Support MCP` — the same tools as MCP tools/resources/prompts.
+4. `AcmeCloud Support MCP` — the same tools exposed as MCP tools/resources/prompts.
 
-All frameworks evaluate these surfaces; they do not get framework-specific applications.
+All frameworks evaluate the same application surfaces rather than framework-specific demos.
 
-## Quick start
+---
 
-Requirements: Python 3.12 and Node.js 24. Python 3.12 is the compatibility baseline because Garak documents its main tested line through Python 3.12 and Promptfoo 0.122.0 dropped Node.js 20 support.
+## Quick Start
 
 ```bash
 git clone https://github.com/ashokmanohar-ai/enterprise-ai-quality-engineering-platform.git
@@ -132,213 +286,130 @@ cd enterprise-ai-quality-engineering-platform
 cp .env.example .env
 make setup
 make validate
-make test-pr
 ```
 
-`make validate` is offline. `make test-pr` is the cost-controlled live profile and requires the
-Azure application/evaluator settings plus `AIQ_ALLOW_LIVE_MODEL_CALLS=true`. For an entirely
-offline preflight, run `make test-unit`, `make test-agents`, and `make test-mcp`.
+For an offline preflight, run:
 
-PowerShell:
-
-```powershell
-git clone https://github.com/ashokmanohar-ai/enterprise-ai-quality-engineering-platform.git
-Set-Location enterprise-ai-quality-engineering-platform
-Copy-Item .env.example .env
-py -3.12 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -e ".[dev,llm,rag,mcp]"
-npm ci
-python -m ai_quality.cli validate
-python -m pytest tests\unit tests\agents tests\mcp
+```bash
+make test-unit
+make test-agents
+make test-mcp
 ```
 
-Validation and deterministic tests do not call a model, run an attack, or generate load. The PR
-profile adds small authorized Azure evaluations; full red teaming and load testing remain excluded.
+For governed live profiles, configure the documented Azure settings and explicit authorization flags first.
 
-## Azure OpenAI configuration
+---
 
-Populate `.env` locally or GitHub Secrets/Variables in CI:
+## Core Engineering Areas
 
-```dotenv
-AZURE_OPENAI_API_KEY=
-AZURE_OPENAI_ENDPOINT=
-AZURE_OPENAI_API_VERSION=2024-10-21
-AZURE_OPENAI_CHAT_DEPLOYMENT=
-AZURE_OPENAI_EVALUATOR_DEPLOYMENT=
-AZURE_OPENAI_EMBEDDING_DEPLOYMENT=
-AZURE_OPENAI_MODEL_A_DEPLOYMENT=
-AZURE_OPENAI_MODEL_B_DEPLOYMENT=
-```
+### Agentic AI
+- Agent evaluation
+- Agent identity
+- Delegated authorization
+- MCP integration
+- Tool governance
+- Human-in-the-loop approval
+- Runtime policy enforcement
 
-Keep application and evaluator deployments separate. The shared settings object redacts secrets and refuses live calls unless `AIQ_ALLOW_LIVE_MODEL_CALLS=true`. Promptfoo maps the same values directly in its provider config; no second secret file exists.
+### RAG & LLM Quality
+- Retrieval quality
+- Groundedness
+- Hallucination detection
+- RAG regression
+- Golden datasets
+- LLM-as-Judge
+- Evaluation campaigns
 
-For production, prefer Azure managed identity/service principal where each native tool supports it. This reference keeps API-key examples because support differs across the toolchain; keys remain environment-only.
+### AI Governance
+- Release gates
+- Policy as code
+- Risk controls
+- Evidence bundles
+- Audit trails
+- Human review
+- Model risk
 
-## Commands
+### AI Reliability
+- SLOs
+- Error budgets
+- Production traces
+- Drift
+- Incident detection
+- Root-cause analysis
+- Rollback and revalidation
 
-| Command | Purpose |
-|---|---|
-| `make validate` | Validate configuration, datasets, and MCP business rules |
-| `make test-unit` | Fast deterministic contracts |
-| `make test-llm` | DeepEval live judge tests |
-| `make test-rag` | Ragas RAG evaluation |
-| `make test-prompts` | Promptfoo prompt regression |
-| `make test-agents` | Deterministic agent trajectory checks |
-| `make test-mcp` | MCP schemas, execution, errors, and business rules |
-| `make test-security` | Authorized Promptfoo/PyRIT/Garak profile |
-| `make test-embeddings` | MTEB shortlist plus application benchmark |
-| `make test-performance` | Authorized AIPerf scenario |
-| `make test-pr` | Reasonably fast local subset |
-| `make quality-gate PROFILE=pr` | Generate the deploy/block decision |
+### Test Automation
+- Playwright
+- API automation
+- UI automation
+- CI/CD
+- BDD
+- Parallel execution
+- Evidence capture
+- Reporting
 
-Tool dependencies are intentionally installable in isolated extras. Full red-team and benchmark packages have large, occasionally conflicting transitive trees; enterprise CI should use the dedicated jobs/containers shown here instead of one mutable workstation environment.
+---
 
-## Test profiles
+## Wider AI Assurance Portfolio
 
-| Profile | Intended scope |
-|---|---|
-| `dev` | deterministic tests, small DeepEval and Ragas smoke subsets |
-| `pr` | unit, LLM, RAG, Promptfoo, agent, MCP, and security regression smoke |
-| `nightly` | full golden data, PyRIT, scoped Garak, embedding checks, AIPerf load |
-| `release` | complete suite, baseline comparison, security/performance gates, final decision |
+The broader portfolio also includes:
+- Human Evaluation & Annotation Operations Studio
+- AI Supply Chain & Dependency Risk Studio
+- AI Incident Response & Forensics Center
+- AI FinOps & Token Economics Studio
+- PromptOps & Prompt Evaluation Studio
+- AI Data Quality & Lineage Control Center
+- AI Model Risk & Compliance Studio
+- AgentOps AI Reliability Studio
+- AI Security Governance Center
+- AgentOps & Agent Evaluation Studio
+- AI Release Assurance Control Plane
+- AI Evaluation Engineering Lab
+- AI Assurance Platform Hub
+- AI Evidence Assurance Passport
+- AI Assurance Case Study
+- AI Quality Evaluation Studio
+- AI Quality Command Center
 
-The quality gate checks completion evidence. A missing required suite is a blocking failure; “not run” is never silently treated as “pass.”
+---
 
-## Canonical data and result contracts
+## Technical White Paper
 
-`datasets/golden/golden.jsonl` is the source of truth. It contains 30 functional/RAG/structured and historical regression cases. `datasets/agents` contains 15 agent/MCP cases. `datasets/security` contains 20 synthetic adversarial regressions.
+**[Testing MCP-Powered AI Agents: Security, Authorization and Quality Engineering Patterns for Enterprise Tool-Connected AI](WHITEPAPER.md)**
 
-Adapters in `evaluation/datasets.py` convert a `CanonicalCase` to DeepEval, Ragas 0.4, Promptfoo, and observability experiment inputs. `datasets/generated` is generated output, never an independently edited source.
+The white paper covers MCP protocol and contract testing, authentication, authorization, scope escalation, tool risk classification, tool selection, trajectories, human approval, prompt injection, tool poisoning, tenant isolation, idempotency, observability, performance, regression datasets and CI/CD quality gates.
 
-Normalized results look like:
+> **Core principle:** discovery is not permission. MCP must preserve authoritative application security boundaries, and trustworthy agent behavior must be proven from execution evidence—not final-response plausibility.
 
-```json
-{
-  "test_id": "refund-001",
-  "framework": "ragas",
-  "category": "rag",
-  "metric": "faithfulness",
-  "score": 0.91,
-  "threshold": 0.8,
-  "passed": true,
-  "reason": "Claims are supported by retrieved policy.",
-  "latency_ms": 1200,
-  "trace_id": "...",
-  "metadata": {}
-}
-```
+---
 
-Every run records commit, branch, dataset hash, prompt version, model/evaluator/embedding deployments, retriever settings, tool versions, random seed, thresholds, environment, timestamp, evaluation run ID, and experiment ID.
+## Documentation Map
 
-## Unified gate
+See the repository's `docs/` directory for detailed architecture, datasets, RAG, LLM, prompt, agent, MCP, security, performance, observability and troubleshooting documentation.
 
-Thresholds live in `config/quality-gates.yaml`; calibrate them from business risk and production evidence. The gate evaluates metric floors, individual blocking failures, suite completeness, severity ceilings, performance SLOs, and baseline regressions.
+---
 
-Outputs:
+## Current Focus
 
-- `reports/summary/quality-report.json`
-- `reports/summary/quality-report.md`
-- native raw evidence under private/short-retention report directories
+I am especially interested in roles and projects involving:
+- AI Quality Engineering
+- AI Assurance
+- Agentic AI
+- Forward Deployed Engineering
+- LLM / RAG Evaluation
+- MCP and AI Agent Governance
+- AI Observability
+- AI Release Engineering
+- AI Safety
+- Healthcare AI Quality
+- Test Architecture
+- Playwright and API Automation
 
-Example decision:
+---
 
-```text
-Enterprise AI Quality Gate
+## Connect
 
-Functional Quality       PASS
-RAG Evaluation           PASS
-Prompt Regression        PASS
-Agent Evaluation         PASS
-MCP Validation           PASS
-Embedding Quality        PASS
-Security                 FAIL
-Performance              PASS
+**Ashok Kumar Manohar**  
+Test Architect | AI Quality Engineer | Forward Deployed AI Engineer
 
-Deployment Decision: BLOCKED
-Blocking finding: high-severity indirect prompt-injection regression
-```
-
-## Observability and production feedback
-
-Set exactly one backend: `OBSERVABILITY_BACKEND=phoenix`, `langfuse`, or `none`. Phoenix is primary. The code does not duplicate production telemetry unless explicitly changed.
-
-Trace hierarchy:
-
-```text
-rag_request
-├── query_processing
-├── retrieval
-├── prompt_construction
-└── generation
-
-agent_request
-├── planning
-├── tool_call
-├── tool_result
-└── final_generation
-```
-
-Attach `evaluation_run_id`, `experiment_id`, `test_case_id`, `git_commit`, prompt version, and score names to traces. A low context-precision score with high faithfulness points to retrieval; high context precision with low faithfulness points to prompt/model generation.
-
-Production issue workflow: find trace → inspect retrieval/prompt/tools/model → sanitize → add canonical case → reproduce → fix → compare experiment → gate → redeploy. The regression remains forever.
-
-## Security and load-test authorization
-
-Security and performance runners fail closed unless their authorization flags are set. Those flags are not consent; they are a final technical guard after the team has written permission, target scope, timing, rate limits, contacts, and data-handling approval.
-
-- never target systems you do not own or have written permission to assess;
-- use only synthetic data and canary secrets;
-- never put credentials, raw customer content, or production system prompts in datasets;
-- retain raw security evidence privately and briefly;
-- sanitize before converting a finding into a regression;
-- configure rate and cost budgets before adaptive attacks or load tests.
-
-## Verified compatibility
-
-| Component | Pin | Important verified behavior |
-|---|---:|---|
-| Python | 3.12.x | Common supported baseline |
-| Node.js | 24.x | Promptfoo 0.122 no longer supports Node 20 |
-| Pydantic / Settings | 2.13.4 / 2.15.0 | Satisfies MCP v2's Pydantic 2.12+ floor |
-| OpenAI Python | 2.53.0 | `AzureOpenAI` / `AsyncAzureOpenAI` clients |
-| DeepEval | 4.0.3 | pytest, G-Eval, RAG metrics, agent trajectory metrics |
-| Ragas | 0.4.3 | collections metrics and `ascore`; deprecated `evaluate()` avoided |
-| Promptfoo | 0.122.0 | `azure:chat:<deployment>`, current eval/red-team commands |
-| PyRIT | 1.0.1 | active `microsoft/PyRIT`; executor-oriented attack API |
-| Garak | 0.16.0 | `--spec` preferred; JSONL report |
-| MTEB | 2.18.16 | task retrieval and custom encoder adapter |
-| MCP Python SDK | 2.0.0 | stable v2, MCP 2026-07-28 |
-| MCP Inspector | 2.0.0 | shared Web/CLI/TUI package |
-| AIPerf | 0.12.0 | `aiperf profile`, OpenAI-compatible endpoints, streaming metrics |
-| Phoenix | 19.21.0 | OpenTelemetry/OpenInference, datasets, evals, experiments |
-| Phoenix client/evals | 3.0.0 / 3.4.0 | API client and evaluation packages |
-| Langfuse Python | 4.14.3 | OpenTelemetry-based observations, scores, datasets, experiments |
-
-Exact behavior and limitations are documented in [COMPATIBILITY.md](docs/COMPATIBILITY.md).
-
-## Documentation map
-
-- [Architecture](docs/ARCHITECTURE.md)
-- [Quality model](docs/QUALITY_MODEL.md)
-- [Datasets and adapters](docs/DATASETS.md)
-- [DeepEval LLM testing](docs/LLM_TESTING.md)
-- [Ragas RAG testing](docs/RAG_TESTING.md)
-- [Prompt regression](docs/PROMPT_REGRESSION.md)
-- [Agent evaluation](docs/AGENT_TESTING.md)
-- [Security testing](docs/SECURITY_TESTING.md)
-- [MCP testing](docs/MCP_TESTING.md)
-- [Embedding testing](docs/EMBEDDING_TESTING.md)
-- [AIPerf performance testing](docs/PERFORMANCE_TESTING.md)
-- [Observability and experiments](docs/OBSERVABILITY.md)
-- [Troubleshooting](docs/TROUBLESHOOTING.md)
-- [CI/CD gates](docs/CI_CD.md)
-- [Compatibility and upgrades](docs/COMPATIBILITY.md)
-
-## Tool overlap policy
-
-Do not run every hallucination metric everywhere, full red-team scans on every PR, multiple expensive judges on each production request, Phoenix and Langfuse simultaneously by default, MTEB instead of application RAG evaluation, or Inspector instead of automated MCP tests. Each tool has one primary job; supporting overlap exists only where it improves diagnosis or creates a durable regression.
-
-## License
-
-MIT. External tools keep their own licenses and terms. Security tests require authorization.
+**Engineering Quality for the AI Era**
